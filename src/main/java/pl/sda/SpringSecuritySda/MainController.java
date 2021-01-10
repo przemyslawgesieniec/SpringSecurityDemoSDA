@@ -8,6 +8,17 @@ public class MainController {
 
     @GetMapping
     public String mainPage(){
-        return "Welcome";
+        return "Welcome Main";
     }
+
+    @GetMapping("/admin")
+    public String adminPanel(){
+        return "Admin Panel";
+    }
+
+    @GetMapping("/user")
+    public String userPanel(){
+        return "User Panel";
+    }
+
 }
