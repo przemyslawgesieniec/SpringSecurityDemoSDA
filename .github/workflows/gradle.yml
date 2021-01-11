@@ -1,17 +1,15 @@
-# This workflow will build a Java project with Gradle
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Java CI with Gradle
+name: Build and deploy WAR app to Azure Web App - az-204-pg-demo-application
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,3 +22,11 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+      
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'az-204-pg-demo-application'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_db0acc38514243bbacca4a8aa2205835 }}
+        package: '${{ github.workspace }}/target/*.jar'
